@@ -21,5 +21,5 @@ from person.views import ListPoet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/listlier/', ListPoet.as_view())
+    path('Mirabbos995/', ListPoet.as_view())
 ]
