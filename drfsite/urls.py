@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from person.views import ListPoet
+from person.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Mirabbos995/', ListPoet.as_view())
+    path('api/v1/ListCreatePoet/', ListPoet.as_view()),
+    path('api/v1/UpdateDeletePoet/<int:pk>/', UpdateDelete.as_view())
 ]
