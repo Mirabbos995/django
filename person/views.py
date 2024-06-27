@@ -21,10 +21,12 @@ class ListPoet(APIView):
         return Response({"posts": serializers.data})
 
 class UpdateDelete(APIView):
-    def put(self, requests, *args, **kwargs):
-        pk = kwargs.get("pk", None)
+    def put(self, requests, *args, **kwargs): #   ushbu kontekstdagi "kwargs" URL namunasidan
+                                                 # asosiy kalitni ("pk") olish va yuklash uchun ishlatiladi, bu esa "put"
+                                                 # usuliga ma'lumotlar bazasidagi mos ob'ektni yangilash imkonini beradi.
+        pk = kwargs.get("pk", None) # None - pk topilmidigan bo'lsa None qaytarsin!
 
-        if not pk:
+        if not pk: # agar pk yo'q bolsa if ishlaydi
             return Response({"post": "Method PUT not allowed!"})
 
         try:
@@ -32,13 +34,13 @@ class UpdateDelete(APIView):
         except:
             return Response({"post": "Object not found!"})
 
-        serializers = PoetSerializers(data=requests.data, instance=instance)
+        serializers = PoetSerializers(data=requests.data, instance=instance) # (data=requests.data) - postmandagi bervorilgan data va instance=instance / put ga o'zgaradi
         serializers.is_valid(raise_exception=True)
         serializers.save()
-        return Response({"post": serializers.data})
+        return Response({"post": serializers.data}) # serializers.data - update bogan data qaytadi
 
 
-    def patch(self, requests, *args, **kwargs):
+    def patch(self, requests, *args, **kwargs): # put zapros - toliq hammasi o'zgartirilishi kerak, patch zapros - bittasni ozgartirsa boladi
         pk = kwargs.get("pk", None)
         if not pk:
             return Response({"post": "Method PUT not allowed!"})

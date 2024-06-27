@@ -14,8 +14,8 @@ class PoetSerializers(serializers.Serializer):
     def create(self, validated_data): # validated_data - postmandan get qilib olingan malumot
         return Person.objects.create(**validated_data) # ** - json dan dictga o'zgartirib databasega yozib qoyadi
 
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get("name", instance.name)
+    def update(self, instance, validated_data): # instance - databasedagi malumot
+        instance.name = validated_data.get("name", instance.name) # "name" - yangilansin, instance.name - agar name yangilanmasa eskisi turaversin
         instance.content = validated_data.get("content", instance.content)
         instance.update_at = validated_data.get("update_at", instance.update_at)
         instance.cat_id = validated_data.get("cat_id", instance.cat_id)
