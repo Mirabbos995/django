@@ -19,4 +19,4 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-#https://www.canva.com/design/DAGEMgniEdE/Nxd7O6eawlK1PbD5jPSAaA/edit
+"https://www.canva.com/design/DAGEMgniEdE/Nxd7O6eawlK1PbD5jPSAaA/edit"
