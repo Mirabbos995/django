@@ -28,7 +28,7 @@ class CRUDPoet(mixins.CreateModelMixin,         # These are Model View Sets
 
     @action(detail=False, methods=['get']) # action - We can access the data through a single url, and this is done by an 'action'
     def category(self, request):
-        data = Category.objects.all()  # pk=pk - 'pk' returns one specific data
+        data = Category.objects.all()  # get(pk=pk) - 'pk' returns one specific data
         return Response({"data": [x.name for x in data]})               # x.name - there is id and name in database
                                                                         # and we'll get only name not id
 
