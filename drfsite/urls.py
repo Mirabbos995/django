@@ -22,13 +22,13 @@ from person.views import *
 
 
 router = routers.SimpleRouter()
-router.register(r'getallpoet', CRUDPoet)
+router.register(r'getallpoet', CRUDPoet, basename="poet") # r - puts slash on the urls itself
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(router.urls)),
+    path('api/v1/', include(router.urls)), # urls - means add 'getallpoet' and 'CRUDPoet' after 'api/v1/'
     path('api/v1/createpoet/', CRUDPoet.as_view({"post": 'create'})),
     # path('api/v1/getonepoet/<int:pk>/',GetOnePoet.as_view()),
     # path('api/v1/postpoet/',PostPoet.as_view()),

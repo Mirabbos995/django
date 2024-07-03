@@ -1,11 +1,12 @@
 from django.forms import model_to_dict
 from django.shortcuts import render
 from rest_framework import generics, viewsets, mixins
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
-from .models import Person
+from .models import Person, Category
 from .serializers import PoetSerializers
 
 
@@ -19,10 +20,17 @@ class CRUDPoet(mixins.CreateModelMixin,         # These are Model View Sets
                    mixins.DestroyModelMixin,
                    mixins.ListModelMixin,
                    GenericViewSet):
-    queryset = Person.objects.all()
+    # queryset = Person.objects.all()
     serializer_class = PoetSerializers
 
+    def get_queryset(self):
+        return Person.objects.all()
 
+    @action(detail=False, methods=['get']) # action - We can access the data through a single url, and this is done by an 'action'
+    def category(self, request):
+        data = Category.objects.all()  # pk=pk - 'pk' returns one specific data
+        return Response({"data": [x.name for x in data]})               # x.name - there is id and name in database
+                                                                        # and we'll get only name not id
 
 
 
