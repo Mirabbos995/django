@@ -24,7 +24,12 @@ class CRUDPoet(mixins.CreateModelMixin,         # These are Model View Sets
     serializer_class = PoetSerializers
 
     def get_queryset(self):
-        return Person.objects.all()
+        pk = self.kwargs.get("pk")
+        if not pk:
+            return Person.objects.all()[:3]
+
+        return Person.objects.filter(pk=pk)
+        # return Person.objects.all()[:3]   # [:3] - is restriction (no more than 3 data)
 
     @action(detail=False, methods=['get']) # action - We can access the data through a single url, and this is done by an 'action'
     def category(self, request):
