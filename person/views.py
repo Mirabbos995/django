@@ -2,11 +2,13 @@ from django.forms import model_to_dict
 from django.shortcuts import render
 from rest_framework import generics, viewsets, mixins
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
 from .models import Person, Category
+# from .permissions import IsAdminUserOrReadOnly, IsOwnerUserOrReadOnly
 from .serializers import PoetSerializers
 
 
@@ -45,26 +47,30 @@ class CRUDPoet(mixins.CreateModelMixin,         # These are Model View Sets
 
 
 
-
 # class GetnAllPoet(generics.ListAPIView):
 #     queryset = Person.objects.all()
 #     serializer_class = PoetSerializers
+#     permission_classes = [IsAuthenticated]
 #
 # class GetOnePoet(generics.RetrieveAPIView):
 #     queryset = Person.objects.all()
 #     serializer_class = PoetSerializers
+#  permission_classes = (IsAdminUser,)
 #
 # class PostPoet(generics.CreateAPIView):
 #     queryset = Person.objects.all()
 #     serializer_class = PoetSerializers
+#     permission_classes = [IsAuthenticated]
 #
 # class UpdatePoet(generics.UpdateAPIView):
 #     queryset = Person.objects.all()
 #     serializer_class = PoetSerializers
+#     permission_classes = (IsOwnerUserOrReadOnly, )
 #
 # class DeletePoet(generics.DestroyAPIView):
 #     queryset = Person.objects.all()
 #     serializer_class = PoetSerializers
+#  permission_classes = (IsAdminUser,)
 
 
 
