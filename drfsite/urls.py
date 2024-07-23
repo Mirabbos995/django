@@ -15,26 +15,37 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshSlidingView
 
 from person.views import *
 
 
-router = routers.SimpleRouter()
-router.register(r'getallpoet', CRUDPoet, basename="poet") # r - puts slash on the urls itself
+# router = routers.SimpleRouter()
+# router.register(r'getallpoet', ModelViewSet, basename="poet") # r - puts slash on the urls itself
+
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(router.urls)), # urls - means add 'getallpoet' and 'CRUDPoet' after 'api/v1/'
-    path('api/v1/createpoet/', CRUDPoet.as_view({"post": 'create'})),
-    # path('api/v1/getonepoet/<int:pk>/',GetOnePoet.as_view()),
-    # path('api/v1/postpoet/',PostPoet.as_view()),
-    # path('api/v1/updatepoet/<int:pk>/',UpdatePoet.as_view()),
-    # path('api/v1/deletepoet/<int:pk>/',DeletePoet.as_view()),
-]
+    # Session id
+    path('api/v1/auth/', include('rest_framework.urls')), # authorization cookie
 
+    # path('api/v1/', include(router.urls)),
+
+    # path('api/v1/update/<int:pk>/', CRUDPoet.as_view({'update': 'list'})),
+    path('api/v1/updatepoet/', ListCreatePoet.as_view()),
+    # path('api/v1/retrivedeletepoet/<int:pk>/', DeleteRetrivePoet.as_view()),
+
+    #Djoser
+    path('api/auth/', include('djoser.urls')), #Registration
+    re_path(r'^auth/', include('djoser.urls.authtoken')), #Authorization
+
+    # JWT
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshSlidingView.as_view(), name='token_refresh'),
+]
 
 
